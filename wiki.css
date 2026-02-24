@@ -261,3 +261,10 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     width: 130px;   
     height: auto;
 }
+
+.spark {
+    position:relative;
+    height: 150px;
+    width: 150px;
+    left: 41%
+}
