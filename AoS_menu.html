@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure of Spark</title>
+    <link rel="icon" type="image/png" href="texture/AoS.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Press+Start+2P&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        #menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Texture/menu_bg.gif') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .title {
+            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 4rem;
+            color: #00ff44;
+            text-shadow: 0 0 10px #00ff88, 
+                         0 0 20px #00ff44,
+                         0 0 30px #00aa33;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00ff88, 
+                             0 0 20px #00ff44,
+                             0 0 30px #00aa33;
+            }
+            to {
+                text-shadow: 0 0 15px #00ff88, 
+                             0 0 25px #00ff44,
+                             0 0 35px #00aa33,
+                             0 0 45px #007722;
+            }
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .menu-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            font-family: 'Press Start 2P', cursive;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #00ff44;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 255, 68, 0.5);
+        }
+        
+        .menu-btn:hover {
+            background: rgba(0, 255, 68, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 68, 0.8);
+        }
+
+        .lang-select {
+            margin-top: 2rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            border: 2px solid #00ff44;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+        }
+        
+        .social-links {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-btn {
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            color: #00ff44;
+            transform: scale(1.2);
+        }
+        
+        .creator {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+        
+        .youtube-btn {
+            background: #ff0000;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .youtube-btn:hover {
+            background: #cc0000;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <h1 class="title" id="title">Приключение Искры</h1>
+        
+            <!-- Добавь рядом с кнопками меню -->
+<div class="menu-buttons">
+    <button class="menu-btn" id="playBtn" onclick="startGame()">Играть</button>
+    <button class="menu-btn" id="controlsBtn" onclick="showControls()">Управление</button>
+    <button class="menu-btn" id="aboutBtn" onclick="showAbout()">Об игре</button>
+    <button class="menu-btn" onclick="toggleFullscreen()">F11</button>
+</div>
+
+        <select class="lang-select" onchange="setLanguage(this.value)">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+        </select>
+        
+        <div class="social-links">
+            <a href="https://www.youtube.com/@Mellt-1127" class="youtube-btn" target="_blank">
+                <span>YouTube</span>
+            </a>
+        </div>
+        
+        <div class="creator" id="creator">Создатель: Mellt</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="sound/menu_music.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+
+        // Словарь переводов
+        const translations = {
+            ru: {
+                title: "Приключение Искры",
+                play: "Играть",
+                controls: "Управление",
+                about: "Об игре",
+                creator: "Создатель: Mellt",
+                controlsText: "Управление в игре:\n\nWASD/Стрелки - Движение\nПробел - Прыжок\nЛКМ - Поставить блок\nПКМ - Удалить блок\nR - Открыть/Закрыть крафты\n\nИспользуйте инструменты для добыче блоков!",
+                aboutText: "'Приключение Искры' - это 2D песочница в стилистике Майнкрафта!\n\nИсследуйте мир, стройте, разрушайте блоки и помните, дальше больше!\n\nВерсия:  1.127\n\nДата начало разработки игры: 07.08.2025"
+            },
+            en: {
+                title: "Adventure of Spark",
+                play: "Play",
+                controls: "Controls",
+                about: "About",
+                creator: "Creator: Mellt",
+                controlsText: "Controls:\n\nWASD/Arrows - Move\nSpace - Jump\nLMB - Place block\nRMB - Remove block\nR - Open/Close crafting\n\nUse tools to mine blocks!",
+                aboutText: "'Adventure of Spark' is a 2D sandbox in Minecraft style!\n\nExplore the world, build, destroy blocks, and remember – more to come!\n\nVersion: 1.127\n\nDevelopment start date: 07.08.2025"
+            }
+        };
+
+        let currentLang = "ru"; // язык по умолчанию
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById("title").innerText = translations[lang].title;
+            document.getElementById("playBtn").innerText = translations[lang].play;
+            document.getElementById("controlsBtn").innerText = translations[lang].controls;
+            document.getElementById("aboutBtn").innerText = translations[lang].about;
+            document.getElementById("creator").innerText = translations[lang].creator;
+        }
+
+        function startGame() {
+            bgMusic.pause();
+            document.getElementById('menu').style.opacity = 0;
+            setTimeout(() => {
+                window.location.href = 'AoS_game.html';
+            }, 500);
+        }
+        
+        function showControls() {
+            alert(translations[currentLang].controlsText);
+        }
+        
+        function showAbout() {
+            alert(translations[currentLang].aboutText);
+        }
+        
+        // Автовоспроизведение музыки при первом клике
+        document.addEventListener('click', () => {
+            bgMusic.volume = 0.3;
+            bgMusic.play();
+        }, { once: true });
+    </script>
+
+<script>
+    // Функция для включения/выключения полноэкранного режима
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                alert("Full Screen Error\n" + err);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    // Подсказка про F11
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            alert("Совет: для лучшего погружения в игру нажмите кнопку F11, чтобы включить полный экран!");
+        }, 1000);
+    });
+</script>
+</body>
+</html>
