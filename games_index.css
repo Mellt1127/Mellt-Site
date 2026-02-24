@@ -87,9 +87,9 @@ body {
 }
 
 .Menu-Game {
-    background-color: #027c02; /* Темно-зеленый */
-    box-shadow: inset 0 0 5px #000; /* Эффект вдавленной кнопки */
-    transform: translateY(2px); /* Сдвиг вниз для эффекта нажатия */
+    background-color: #027c02; 
+    box-shadow: inset 0 0 5px #000; 
+    transform: translateY(2px); 
     color: #000;
 }
 
@@ -146,7 +146,6 @@ body {
     text-transform: uppercase;
    
     
-    /* Твой 3D эффект */
     text-shadow: 
         1px 1px 0px #1a5c36,
         2px 2px 0px #276d45,
@@ -222,7 +221,7 @@ body {
     justify-content: center; /* Центрирует карточки */
     gap: 30px; /* Расстояние между карточками */
     padding: 20px;
-    flex-wrap: wrap; /* Если не влезут, перенесутся вниз */
+    flex-wrap: wrap;
 }
 
 .game-card {
@@ -239,12 +238,12 @@ body {
 }
 
 .game-card:hover {
-    transform: scale(1.05); /* Карточка чуть увеличится при наведении */
+    transform: scale(1.05);
     cursor: pointer;
 }
 
 .game-card img {
-    width: 100%; /* Картинка подстроится под ширину рамки */
+    width: 100%; 
     border-radius: 5px;
 }
 
@@ -275,14 +274,13 @@ body {
 }
 
 .secret-eye-container img {
-    width: 35px; /* Размер иконки */
+    width: 35px; 
     cursor: help; 
     transition: transform 0.2s;
     z-index: 1001;
     position: relative;
 }
 
-/* Слой затемнения */
 #screen-darken {
     position: fixed;
     top: 0;
@@ -291,17 +289,15 @@ body {
     height: 100vh;
     background: black;
     opacity: 0;
-    pointer-events: none; /* Чтобы не мешал нажимать на кнопки */
-    transition: opacity 3s ease; /* Медленное потемнение */
+    pointer-events: none; 
+    transition: opacity 3s ease; 
     z-index: 1000;
 }
 
-/* Класс для активации потемнения */
 .is-dark {
-    opacity: 0.7 !important; /* Насколько сильно темнеет (0.7 = 70%) */
+    opacity: 0.7 !important;
 }
 
-/* Анимация тряски экрана */
 @keyframes screen-shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -316,20 +312,17 @@ body {
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-/* Класс для тряски (применяем к body) */
 .shake-effect {
     animation: screen-shake 0.3s infinite;
 }
 
-/* Сам контейнер глаза */
 .secret-eye-container {
     text-align: center;
     margin-top: 15px;
 }
 
-/* Увеличиваем глаз */
 #eye-sprite {
-    width: 120px; /* Сделал в два раза больше (было 60px) */
+    width: 120px; 
     height: auto;
     cursor: help;
     transition: 0.3s;
@@ -342,8 +335,6 @@ body {
     filter: drop-shadow(0 0 15px rgba(46, 204, 113, 1));
 }
 
-/* Исправленная анимация тряски */
-/* Мы добавляем -50% к каждому значению, чтобы модалка не улетала */
 @keyframes modal-shake {
     0% { transform: translate(-50%, -50%); }
     10% { transform: translate(calc(-50% - 4px), calc(-50% + 4px)); }
@@ -358,7 +349,6 @@ body {
     100% { transform: translate(-50%, -50%); }
 }
 
-/* Применяем тряску */
 .shake-active {
     animation: modal-shake 0.15s infinite !important;
 }
@@ -376,3 +366,4 @@ body {
     transition: opacity 1s ease;
     z-index: 9999;
 }
+

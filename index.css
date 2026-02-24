@@ -197,16 +197,14 @@ border-radius: 6px;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Курсор со знаком вопроса */
 .secret-eye-container img {
-    width: 35px; /* Размер иконки */
+    width: 35px; 
     cursor: help; 
     transition: transform 0.2s;
     z-index: 1001;
     position: relative;
 }
 
-/* Слой затемнения */
 #screen-darken {
     position: fixed;
     top: 0;
@@ -216,16 +214,14 @@ border-radius: 6px;
     background: black;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 3s ease; /* Медленное потемнение */
+    transition: opacity 3s ease; 
     z-index: 1000;
 }
 
-/* Класс для активации потемнения */
 .is-dark {
-    opacity: 1 !important; /* Насколько сильно темнеет (0.7 = 70%) */
+    opacity: 1 !important;
 }
 
-/* Анимация тряски экрана */
 @keyframes screen-shake {
     0% { transform: translate(1px, 1px) rotate(0deg); }
     10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -240,20 +236,17 @@ border-radius: 6px;
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-/* Класс для тряски (применяем к body) */
 .shake-effect {
     animation: screen-shake 0.3s infinite;
 }
 
-/* Сам контейнер глаза */
 .secret-eye-container {
     text-align: center;
     margin-top: 15px;
 }
 
-/* Увеличиваем глаз */
 #eye-sprite {
-    width: 120px; /* Сделал в два раза больше (было 60px) */
+    width: 120px; 
     height: auto;
     cursor: help;
     transition: 0.3s;
@@ -266,8 +259,6 @@ border-radius: 6px;
     filter: drop-shadow(0 0 15px rgba(46, 204, 113, 1));
 }
 
-/* Исправленная анимация тряски */
-/* Мы добавляем -50% к каждому значению, чтобы модалка не улетала */
 @keyframes modal-shake {
     0% { transform: translate(-50%, -50%); }
     10% { transform: translate(calc(-50% - 4px), calc(-50% + 4px)); }
@@ -282,12 +273,10 @@ border-radius: 6px;
     100% { transform: translate(-50%, -50%); }
 }
 
-/* Применяем тряску */
 .shake-active {
     animation: modal-shake 0.15s infinite !important;
 }
 
-/* Слой затемнения оставляем как был */
 #screen-darken {
     position: fixed;
     top: 0;
