@@ -1,0 +1,302 @@
+body {
+    background: radial-gradient(circle, #1b271b 35%, #050505 100%); /* Глубокий градиент */
+    border: 15px solid #000; /* Черная рамка по краям всего экрана */
+    min-height: 100vh;
+    margin: 0;
+}
+
+.Logo{
+    position: relative;
+    width: 111px;
+    height: 111px;
+    left: 3%;
+         transition: 0.6s;
+}
+.Logo:hover{  
+  transform: scale(1.6);      
+}
+
+.Menu {
+    position: absolute;
+    width: 98%;
+    height: 111px;
+    border-color: black;
+    border-radius: 25px;
+    background-color: #005c2e;
+}
+
+.Menu-Menu {  
+    position: absolute;
+    width: 20%;
+    height: 75px;
+    border: 4px solid black;
+    border-radius: 50px;
+    background-color: #18c63b;
+    top: 4%;
+    left: 15%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    color: #28362b;
+    transition: 0.3s;
+}
+
+.Menu-Menu {
+    background-color: #027c02; /* Темно-зеленый */
+    box-shadow: inset 0 0 5px #000; /* Эффект вдавленной кнопки */
+    transform: translateY(2px); /* Сдвиг вниз для эффекта нажатия */
+    color: #000;
+}
+
+
+.Menu-Menu:hover{  
+  background: #236b18;      
+  transform: scale(1.1);      
+  box-shadow: 0 0 20px #000000;
+}
+
+.Menu-Wiki {  
+    position: absolute;
+    width:20%;
+    height: 75px;
+    border: 4px solid black;
+    border-radius: 50px;
+    background-color: #18c63b;
+    top: 4%;
+    left: 40%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    color: #28362b;
+    transition: 0.3s;
+}
+
+.Menu-Wiki:hover{  
+  background: #236b18;      
+  transform: scale(1.1);      
+  box-shadow: 0 0 20px #000000;
+}
+
+.Menu-Game {  
+    position: absolute;
+    width: 20%;
+    height: 75px;
+    border: 4px solid black;
+    border-radius: 50px;
+    background-color: #18c63b;
+    top: 4%;
+    left: 65%;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    color: #28362b;
+    transition: 0.3s;
+}
+.Menu-Game:hover{  
+  background: #236b18;      
+  transform: scale(1.1);      
+  box-shadow: 0 0 20px #000000;
+}
+
+.About{
+    position: relative;
+    width: 111px;
+    height: 111px;;
+    left: 80%;
+         transition: 0.4s;
+}
+.About:hover{  
+  transform: scale(0.8);      
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 5;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  width: 300px;
+  border-radius: 15px;
+  z-index: 10;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+  font-size: 21px;
+}
+
+
+
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.news-item.update {
+    border-left: 5px solid #ffcc00; /* Золотой цвет для обновлений */
+    background: #3e3b0b; /* Чуть другой оттенок фона */
+    color: #ffffff;
+    height: 150px ;
+border-radius: 6px;
+}
+
+.news-date {
+    font-size: 0.8em;
+    color: #888;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.intro h1 {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Добавит объема */
+    font-family:'Times New Roman', Times, serif;
+     text-align: center;
+}
+
+.intro p {
+    color: #cccccc; /* Светло-серый, чтобы не бил в глаза */
+      text-align: center;
+}
+
+
+
+.news-green {
+    background: #1a1a1a;
+    border-left: 8px solid #2ecc71; /* Зеленая полоска сбоку */
+    padding: 15px;
+    border-radius: 6px;
+    color: white;
+    font-family: sans-serif;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+.news-violet {
+    background: #1a1a1a;
+    border-left: 8px solid #5c045c; /* Полоска сбоку */
+    padding: 15px;
+    border-radius: 6px;
+    color: white;
+    font-family: sans-serif;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Курсор со знаком вопроса */
+.secret-eye-container img {
+    width: 35px; /* Размер иконки */
+    cursor: help; 
+    transition: transform 0.2s;
+    z-index: 1001;
+    position: relative;
+}
+
+/* Слой затемнения */
+#screen-darken {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 3s ease; /* Медленное потемнение */
+    z-index: 1000;
+}
+
+/* Класс для активации потемнения */
+.is-dark {
+    opacity: 1 !important; /* Насколько сильно темнеет (0.7 = 70%) */
+}
+
+/* Анимация тряски экрана */
+@keyframes screen-shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* Класс для тряски (применяем к body) */
+.shake-effect {
+    animation: screen-shake 0.3s infinite;
+}
+
+/* Сам контейнер глаза */
+.secret-eye-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Увеличиваем глаз */
+#eye-sprite {
+    width: 120px; /* Сделал в два раза больше (было 60px) */
+    height: auto;
+    cursor: help;
+    transition: 0.3s;
+    position: relative;
+    z-index: 10001;
+    filter: drop-shadow(50px 50px 50px rgba(46, 204, 113, 0.5));
+}
+
+#eye-sprite:hover {
+    filter: drop-shadow(0 0 15px rgba(46, 204, 113, 1));
+}
+
+/* Исправленная анимация тряски */
+/* Мы добавляем -50% к каждому значению, чтобы модалка не улетала */
+@keyframes modal-shake {
+    0% { transform: translate(-50%, -50%); }
+    10% { transform: translate(calc(-50% - 4px), calc(-50% + 4px)); }
+    20% { transform: translate(calc(-50% - 4px), calc(-50% - 4px)); }
+    30% { transform: translate(calc(-50% + 4px), calc(-50% + 4px)); }
+    40% { transform: translate(calc(-50% + 4px), calc(-50% - 4px)); }
+    50% { transform: translate(calc(-50% - 4px), calc(-50% + 4px)); }
+    60% { transform: translate(calc(-50% - 4px), calc(-50% - 4px)); }
+    70% { transform: translate(calc(-50% + 4px), calc(-50% + 4px)); }
+    80% { transform: translate(calc(-50% + 4px), calc(-50% - 4px)); }
+    90% { transform: translate(calc(-50% - 4px), calc(-50% + 4px)); }
+    100% { transform: translate(-50%, -50%); }
+}
+
+/* Применяем тряску */
+.shake-active {
+    animation: modal-shake 0.15s infinite !important;
+}
+
+/* Слой затемнения оставляем как был */
+#screen-darken {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, transparent 10%, black 90%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    z-index: 9999;
+}
