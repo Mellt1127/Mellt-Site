@@ -591,7 +591,7 @@ function physics(dt){
 
   // камера — центрируем точно (CAMERA_SMOOTH=1 делает полное приближение)
   const tx = player.x - cv.width/3;
-  const ty = player.y - cv.height/2 + player.h*1.5;
+  const ty = player.y - cv.height/2 + player.h*1.75;
   cam.x += (tx - cam.x)*CAMERA_SMOOTH;
   cam.y += (ty - cam.y)*CAMERA_SMOOTH;
   cam.x = clamp(cam.x,0, WORLD_W*TILE - cv.width);
