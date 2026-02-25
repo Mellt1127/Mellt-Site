@@ -2,154 +2,27 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Моя Океания</title>
-    <style>
-        body { margin: 0; background: #2c3e50; font-family: sans-serif; overflow: hidden; }
-        
-        /* Наш остров */
-        #island {
-            width: 600px;
-            height: 400px;
-            background: #f1c40f; /* Песок */
-            border-radius: 50%;
-            margin: 50px auto;
-            position: relative;
-            border: 10px solid #e67e22;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
-
-        /* Трава внутри острова */
-        #grass {
-            width: 80%;
-            height: 70%;
-            background: #2ecc71;
-            border-radius: 50%;
-            position: absolute;
-            top: 15%; left: 10%;
-        }
-
-        /* Интерфейс */
-        #ui {
-            position: fixed;
-            top: 20px; left: 20px;
-            color: white;
-            background: rgba(0,0,0,0.7);
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .object {
-            position: absolute;
-            cursor: pointer;
-            transition: transform 0.1s;
-            user-select: none;
-        }
-
-        .object:hover { transform: scale(1.1); }
-        .object:active { transform: scale(0.9); }
-
-        .exp-bar-container {
-            width: 200px;
-            height: 20px;
-            background: #34495e;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-
-        #exp-fill {
-            width: 0%;
-            height: 100%;
-            background: #3498db;
-            border-radius: 10px;
-            transition: width 0.3s;
-        }
-    </style>
+    <title>Oceania</title>
+    <link rel="stylesheet" href="ocenania.css">
 </head>
 <body>
 
-<div id="ui">
-    <div>Уровень: <span id="lvl-val">1</span></div>
-    <div>Опыт: <span id="exp-val">0</span> / <span id="next-lvl-val">100</span></div>
-    <div class="exp-bar-container">
-        <div id="exp-fill"></div>
+    <div class="ui">
+        <div class="stat-item">Уровень: <span id="lvl">1</span></div>
+        <div class="stat-item">
+            Опыт: <span id="exp-val">0</span>/<span id="next-lvl-val">100</span>
+            <div class="bar"><div id="exp-fill"></div></div>
+        </div>
+        <div class="stat-item">
+            Энергия: <span id="en-val">10</span>/10
+            <div class="bar"><div id="en-fill"></div></div>
+        </div>
     </div>
-</div>
 
-<div id="island">
-    <div id="grass"></div>
-</div>
+    <div id="game-world">
+        <div id="island"></div>
+    </div>
 
-<script>
-    // Данные игрока
-    let player = {
-        exp: 0,
-        lvl: 1,
-        expToNextLvl: 100
-    };
-
-    const island = document.getElementById('grass');
-
-    // Функция создания объекта (дерево или куст)
-    function createObject(type) {
-        const obj = document.createElement('div');
-        obj.className = 'object';
-        
-        // Визуально отличаем
-        if (type === 'tree') {
-            obj.innerHTML = '🌳';
-            obj.style.fontSize = '40px';
-            obj.dataset.exp = 50; // За дерево больше опыта
-        } else {
-            obj.innerHTML = '🌿';
-            obj.style.fontSize = '30px';
-            obj.dataset.exp = 25; // За куст как ты просил
-        }
-
-        // Случайная позиция на траве
-        obj.style.left = Math.random() * 80 + 10 + '%';
-        obj.style.top = Math.random() * 80 + 10 + '%';
-
-        // Клик по объекту
-        obj.onclick = function() {
-            addExp(parseInt(this.dataset.exp));
-            this.remove(); // Удаляем объект
-            setTimeout(() => createObject(Math.random() > 0.3 ? 'bush' : 'tree'), 3000); // Респаун через 3 сек
-        };
-
-        island.appendChild(obj);
-    }
-
-    // Функция добавления опыта
-    function addExp(amount) {
-        player.exp += amount;
-
-        // Проверка уровня
-        if (player.exp >= player.expToNextLvl) {
-            player.exp -= player.expToNextLvl;
-            player.lvl++;
-            player.expToNextLvl = Math.round(player.expToNextLvl * 1.5); // Усложняем следующий уровень
-            alert("Поздравляем! Новый уровень: " + player.lvl);
-        }
-
-        updateUI();
-    }
-
-    // Обновление текста на экране
-    function updateUI() {
-        document.getElementById('lvl-val').innerText = player.lvl;
-        document.getElementById('exp-val').innerText = player.exp;
-        document.getElementById('next-lvl-val').innerText = player.expToNextLvl;
-        
-        let percent = (player.exp / player.expToNextLvl) * 100;
-        document.getElementById('exp-fill').style.width = percent + '%';
-    }
-
-    // Создаем начальные кусты и деревья
-    for(let i = 0; i < 8; i++) {
-        createObject(i < 5 ? 'bush' : 'tree');
-    }
-
-</script>
-
+    <script src="oceania.js"></script>
 </body>
 </html>

@@ -1,67 +1,100 @@
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-// Состояние игры
-let wood = 0;
-let energy = 10;
-
-// Объект дерева
-let tree = {
-    x: 250,
-    y: 150,
-    width: 60,
-    height: 80,
-    hp: 3 // Нужно 3 клика, чтобы срубить
+const player = {
+    exp: 0,
+    nextLvl: 100,
+    lvl: 1,
+    energy: 10,
+    maxEnergy: 10
 };
 
-// Функция отрисовки
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Рисуем дерево (пока просто коричневый прямоугольник, заменишь на картинку)
-    ctx.fillStyle = '#5d4037';
-    ctx.fillRect(tree.x, tree.y, tree.width, tree.height);
-    
-    // Подпись над деревом
-    ctx.fillStyle = 'white';
-    ctx.fillText(`HP: ${tree.hp}`, tree.x + 15, tree.y - 10);
-}
-
-// Обработка клика
-canvas.addEventListener('mousedown', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    // Проверяем, попал ли клик по дереву
-    if (mouseX >= tree.x && mouseX <= tree.x + tree.width &&
-        mouseY >= tree.y && mouseY <= tree.y + tree.height) {
-        
-        harvestTree();
-    }
-});
-
-function harvestTree() {
-    if (energy > 0) {
-        tree.hp--;
-        energy--;
-        updateUI();
-
-        if (tree.hp <= 0) {
-            wood += 5;
-            tree.hp = 3; // Дерево "выросло" заново для теста
-            alert("Дерево срублено! +5 дерева");
-            updateUI();
-        }
-    } else {
-        alert("Нет энергии! Подожди немного.");
-    }
-}
+const island = document.getElementById('island');
 
 function updateUI() {
-    document.getElementById('woodCount').innerText = wood;
-    document.getElementById('energyCount').innerText = energy;
+    document.getElementById('lvl').innerText = player.lvl;
+    document.getElementById('en-val').innerText = player.energy;
+    document.getElementById('exp-val').innerText = player.exp;
+    document.getElementById('next-lvl-val').innerText = player.nextLvl;
+    
+    document.getElementById('exp-fill').style.width = (player.exp / player.nextLvl * 100) + "%";
+    document.getElementById('en-fill').style.width = (player.energy / player.maxEnergy * 100) + "%";
 }
 
-// Запуск цикла отрисовки
-setInterval(draw, 1000 / 60);
+// Функция для летящего текста опыта
+function showFloatingText(x, y, text) {
+    const el = document.createElement('div');
+    el.className = 'exp-float';
+    el.innerText = `+${text} EXP`;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 800);
+}
+
+function spawnObject(type) {
+    const obj = document.createElement('div');
+    obj.className = 'obj';
+    
+    const config = {
+        tree: { img: 'texture/palma.png', hp: 3, exp: 75, size: 90 },
+        grass: { img: 'texture/kust.png', hp: 1, exp: 25, size: 50 }
+    };
+
+    const settings = config[type];
+    let currentHP = settings.hp;
+
+    obj.innerHTML = `<img src="${settings.img}" width="${settings.size}">`;
+    
+    // Расположение
+    obj.style.left = Math.random() * 80 + 5 + "%";
+    obj.style.top = Math.random() * 70 + 5 + "%";
+
+    obj.onclick = (e) => {
+        if (player.energy >= 1) {
+            player.energy -= 1;
+            currentHP -= 1;
+
+            // Эффект удара
+            obj.style.transform = "scale(0.8)";
+            setTimeout(() => { obj.style.transform = "scale(1)"; }, 100);
+
+            if (currentHP <= 0) {
+                player.exp += settings.exp;
+                
+                // Показываем опыт в месте клика
+                showFloatingText(e.clientX, e.clientY, settings.exp);
+                
+                obj.remove();
+                setTimeout(() => spawnObject(Math.random() > 0.3 ? 'grass' : 'tree'), 3000);
+            }
+
+            checkLevelUp();
+            updateUI();
+        } else {
+            alert("Нужно подождать! Энергия восстанавливается...");
+        }
+    };
+
+    island.appendChild(obj);
+}
+
+function checkLevelUp() {
+    if (player.exp >= player.nextLvl) {
+        player.exp -= player.nextLvl;
+        player.lvl++;
+        player.nextLvl = Math.round(player.nextLvl * 1.6);
+        alert("🎉 Новый уровень: " + player.lvl);
+    }
+}
+
+// Регенерация энергии (каждые 7 секунд)
+setInterval(() => {
+    if (player.energy < player.maxEnergy) {
+        player.energy++;
+        updateUI();
+    }
+}, 7000);
+
+// Создаем объекты при старте
+for(let i = 0; i < 5; i++) spawnObject('grass');
+for(let i = 0; i < 3; i++) spawnObject('tree');
+
+updateUI();
