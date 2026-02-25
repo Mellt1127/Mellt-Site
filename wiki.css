@@ -3,18 +3,18 @@
 }
 
 body {
-  background: radial-gradient(circle, #1b271b 50%, #050505 100%); /* Глубокий градиент */
-    border: 15px solid #000; /* Черная рамка по краям всего экрана */
+  background: radial-gradient(circle, #1b271b 50%, #050505 100%);
+    border: 15px solid #000;
     min-height: 100vh;
     margin: 0;
 }
 
-/* Для всей страницы */
+
 body {
     font-family: "Times New Roman", Times, serif;
 }
 
-/* Но для заголовков и меню оставляем жирный игровой стиль */
+
 h1, h2, .Menu, .wiki-sidebar h2 {
     font-family: 'Impact', 'Arial Black', sans-serif;
 }
@@ -81,9 +81,9 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 }
 
 .Menu-Wiki {
-    background-color: #027c02; /* Темно-зеленый */
-    box-shadow: inset 0 0 5px #000; /* Эффект вдавленной кнопки */
-    transform: translateY(2px); /* Сдвиг вниз для эффекта нажатия */
+    background-color: #027c02;
+    box-shadow: inset 0 0 5px #000;
+    transform: translateY(2px);
     color: #000;
 }
 
@@ -208,9 +208,9 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 }
 
 .secret-eye-container {
-    position: absolute; /* Глаз всегда на экране при скролле */
-    right: 80px;     /* Отступ от правого края */
-    top: 1030px;        /* Центрируем по вертикали */
+    position: absolute;
+    right: 80px;
+    top: 1030px;
     z-index: 10003; 
     pointer-events: all; 
 }
@@ -267,4 +267,19 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     height: 150px;
     width: 150px;
     left: 41%
+}
+
+.wiki-content {
+    flex-grow: 1; /* Заставляет правую часть занимать всё свободное место */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 30px;
+    min-height: 500px;
+    box-sizing: border-box; /* Чтобы padding не раздувал блок */
+}
+
+.oceaniaa {
+height: 150px;
+weight: auto;
+
 }

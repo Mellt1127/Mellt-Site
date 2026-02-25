@@ -70,3 +70,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+javascript
+document.querySelectorAll('.wiki-nav').forEach(link => {
+    link.onclick = function(e) {
+        e.preventDefault(); // Чтобы страница не прыгала вверх
+
+        // 1. Убираем активный класс у всех ссылок
+        document.querySelectorAll('.wiki-nav').forEach(nav => nav.classList.remove('active-link'));
+        // 2. Добавляем активный класс нажатой ссылке
+        this.classList.add('active-link');
+
+        // 3. Скрываем все секции
+        document.querySelectorAll('.wiki-content section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // 4. Показываем нужную секцию
+        const targetId = this.getAttribute('href').replace('#', '');
+        document.getElementById(targetId).style.display = 'block';
+    }
+});
