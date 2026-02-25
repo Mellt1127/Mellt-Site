@@ -263,10 +263,12 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 }
 
 .spark {
-    position:relative;
+    position:absolute;
     height: 150px;
-    width: 150px;
-    left: 41%
+    width: auto;
+    
+    right:33px;
+    top:207px
 }
 
 .wiki-content {
@@ -281,5 +283,4 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 .oceaniaa {
 height: 150px;
 weight: auto;
-
 }
