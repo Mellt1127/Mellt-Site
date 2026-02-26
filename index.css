@@ -1,3 +1,7 @@
+* {
+    font-family: "Times New Roman", Times, serif !important;
+}
+
 body {
     background: radial-gradient(circle, #1b271b 35%, #050505 100%); /* Глубокий градиент */
     border: 15px solid #000; /* Черная рамка по краям всего экрана */
@@ -187,7 +191,17 @@ border-radius: 6px;
 
 .news-violet {
     background: #1a1a1a;
-    border-left: 8px solid #5c045c; /* Полоска сбоку */
+    border-left: 8px solid #b00db0; /* Полоска сбоку */
+    padding: 15px;
+    border-radius: 6px;
+    color: white;
+    font-family: sans-serif;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+.news-yellow {
+    background: #1a1a1a;
+    border-left: 8px solid #dcd90f;
     padding: 15px;
     border-radius: 6px;
     color: white;
