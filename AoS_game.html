@@ -903,19 +903,19 @@ function nearBlock(targetId, radius=3){
 function buildCraftMenu(){
   clearCraftMenu();
   // Доски 1 -> 5 (иконка бревно -> стрелка -> доска*5)
-  addRecipeEl(["Texture/wood.png","Texture/arrow.png","Texture/planks.png"],"Доски x5", ()=>{
+  addRecipeEl(["texture/wood.png","texture/arrow.png","texture/planks.png"],"Доски x5", ()=>{
     if(useInv(BLOCKS.WOOD,1)){ addInv(BLOCKS.PLANKS,5); showTip('1 бревно → 5 досок'); }
     else showWarn('Нужно: 1 бревно');
   });
 
   // Верстак (15 досок -> 1 верстак) (иконка доски*15 -> стрелка -> верстак)
-  addRecipeEl(["Texture/planks.png","Texture/arrow.png","Texture/workbench.png"],"Верстак ㅤㅤㅤ15 → x1", ()=>{
+  addRecipeEl(["texture/planks.png","texture/arrow.png","texture/workbench.png"],"Верстак ㅤㅤㅤ15 → x1", ()=>{
     if(useInv(BLOCKS.PLANKS,15)){ addInv(BLOCKS.WORKBENCH,1); showTip('Верстак готов'); }
     else showWarn('Нужно: 15 досок');
   });
 
   // Факел (2 доски + 1 уголь -> 3 факела) (иконки: уголь + доска*2 -> стрелка -> факел*3)
-  addRecipeEl(["Texture/coal_item.png","Texture/planks.png","Texture/planks.png","Texture/arrow.png","Texture/torch.png"],"Факел ×3", ()=>{
+  addRecipeEl(["texture/coal_item.png","texture/planks.png","texture/planks.png","texture/arrow.png","texture/torch.png"],"Факел ×3", ()=>{
     if((player.inv[BLOCKS.PLANKS]||0)>=2 && (player.inv[BLOCKS.COAL_ITEM]||0)>=1){
       useInv(BLOCKS.PLANKS,2); useInv(BLOCKS.COAL_ITEM,1);
       addInv(BLOCKS.TORCH,3); showTip('Скрафтил 3 факела');
@@ -924,7 +924,7 @@ function buildCraftMenu(){
 
   // Печь доступна в меню ТОЛЬКО если рядом есть верстак (добавляется динамически)
   if(nearBlock(BLOCKS.WORKBENCH)){
-    addRecipeEl(["Texture/planks.png","Texture/planks.png","Texture/planks.png","Texture/planks.png","Texture/planks.png","Texture/planks.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/stone.png","Texture/arrow.png","Texture/furnace_off.png"],
+    addRecipeEl(["texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/arrow.png","texture/furnace_off.png"],
     "Печь (6 досок + 9 камня)", ()=>{
       if((player.inv[BLOCKS.PLANKS]||0)>=6 && (player.inv[BLOCKS.STONE]||0)>=9){
         useInv(BLOCKS.PLANKS,6); useInv(BLOCKS.STONE,9);
@@ -935,7 +935,7 @@ function buildCraftMenu(){
 
   // Переплавка — если рядом печь
   if(nearBlock(BLOCKS.FURNACE_OFF) || nearBlock(BLOCKS.FURNACE_ON)){
-    addRecipeEl(["Texture/iron.png","Texture/coal_item.png","Texture/arrow.png","Texture/iron_ingot.png"],"Плавить железо (15 сек)", ()=>{
+    addRecipeEl(["texture/iron.png","texture/coal_item.png","texture/arrow.png","texture/iron_ingot.png"],"Плавить железо (15 сек)", ()=>{
       if((player.inv[BLOCKS.IRON]||0)>=1 && (player.inv[BLOCKS.COAL_ITEM]||0)>=1){
         const gx = Math.floor((player.x+player.w/2)/TILE);
         const gy = Math.floor((player.y+player.h/2)/TILE);
