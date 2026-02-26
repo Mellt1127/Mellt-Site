@@ -110,6 +110,7 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     color: #28362b;
     transition: 0.3s;
 }
+
 .Menu-Game:hover{  
   background: #236b18;      
   transform: scale(1.1);      
@@ -267,8 +268,8 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     height: 150px;
     width: auto;
     
-    right:33px;
-    top:207px
+    right:65px;
+    top:280px
 }
 
 .wiki-content {
@@ -300,3 +301,31 @@ weight: auto;
         text-align: center;
         color: #aaa;
     }
+
+/* Контейнер для управления положением */
+.play-button-container {
+    text-align: center; /* Можно заменить на left или right */
+    margin: 20px 0;    /* Отступы сверху и снизу */
+    margin-top: 600px;
+}
+
+.play-now-btn {
+    display: inline-block;
+    padding: 12px 24px;       /* Умеренный размер */
+    background-color: #278e52; /* Спокойный зеленый */
+    color: white;
+    text-decoration: none;
+    font-size: 22px;          /* Обычный размер текста */
+    font-weight: normal;      /* НЕ жирный */
+    text-transform: none;     /* НЕ капсом (маленькие буквы) */
+    border-radius: 8px;       /* Почти квадратная (легкое скругление для стиля) */
+    border: 1px solid #000000; /* Тонкая рамка вместо жирной тени */
+    transition: all 0.3s ease;
+}
+
+/* Эффект при наведении — тоже спокойный */
+.play-now-btn:hover {
+    background-color: #2ecc71;
+    cursor: pointer;
+    opacity: 0.9;
+}
