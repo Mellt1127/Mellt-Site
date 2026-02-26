@@ -329,3 +329,11 @@ weight: auto;
     cursor: pointer;
     opacity: 0.9;
 }
+
+.secret-eye-container2 {
+    position: absolute;
+    right: 80px;
+    top: 670px;
+    z-index: 10003; 
+    pointer-events: all; 
+}
