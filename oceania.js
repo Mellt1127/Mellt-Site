@@ -18,7 +18,6 @@ function updateUI() {
     document.getElementById('en-fill').style.width = (player.energy / player.maxEnergy * 100) + "%";
 }
 
-// Функция для летящего текста опыта
 function showFloatingText(x, y, text) {
     const el = document.createElement('div');
     el.className = 'exp-float';
@@ -43,7 +42,6 @@ function spawnObject(type) {
 
     obj.innerHTML = `<img src="${settings.img}" width="${settings.size}">`;
     
-    // Расположение
     obj.style.left = Math.random() * 80 + 5 + "%";
     obj.style.top = Math.random() * 70 + 5 + "%";
 
@@ -52,14 +50,12 @@ function spawnObject(type) {
             player.energy -= 1;
             currentHP -= 1;
 
-            // Эффект удара
             obj.style.transform = "scale(0.8)";
             setTimeout(() => { obj.style.transform = "scale(1)"; }, 100);
 
             if (currentHP <= 0) {
                 player.exp += settings.exp;
                 
-                // Показываем опыт в месте клика
                 showFloatingText(e.clientX, e.clientY, settings.exp);
                 
                 obj.remove();
@@ -85,7 +81,6 @@ function checkLevelUp() {
     }
 }
 
-// Регенерация энергии (каждые 7 секунд)
 setInterval(() => {
     if (player.energy < player.maxEnergy) {
         player.energy++;
@@ -93,7 +88,6 @@ setInterval(() => {
     }
 }, 7000);
 
-// Создаем объекты при старте
 for(let i = 0; i < 5; i++) spawnObject('grass');
 for(let i = 0; i < 3; i++) spawnObject('tree');
 

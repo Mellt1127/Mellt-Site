@@ -47,12 +47,11 @@ body {
 }
 
 .Menu-Menu {
-    background-color: #027c02; /* Темно-зеленый */
-    box-shadow: inset 0 0 5px #000; /* Эффект вдавленной кнопки */
-    transform: translateY(2px); /* Сдвиг вниз для эффекта нажатия */
+    background-color: #027c02;
+    box-shadow: inset 0 0 5px #000;
+    transform: translateY(2px);
     color: #000;
 }
-
 
 .Menu-Menu:hover{  
   background: #236b18;      
@@ -151,8 +150,8 @@ body {
 }
 
 .news-item.update {
-    border-left: 5px solid #ffcc00; /* Золотой цвет для обновлений */
-    background: #3e3b0b; /* Чуть другой оттенок фона */
+    border-left: 5px solid #ffcc00;
+    background: #3e3b0b;
     color: #ffffff;
     height: 150px ;
 border-radius: 6px;
@@ -177,11 +176,9 @@ border-radius: 6px;
       text-align: center;
 }
 
-
-
 .news-green {
     background: #1a1a1a;
-    border-left: 8px solid #2ecc71; /* Зеленая полоска сбоку */
+    border-left: 8px solid #2ecc71;
     padding: 15px;
     border-radius: 6px;
     color: white;
@@ -191,7 +188,7 @@ border-radius: 6px;
 
 .news-violet {
     background: #1a1a1a;
-    border-left: 8px solid #b00db0; /* Полоска сбоку */
+    border-left: 8px solid #b00db0;
     padding: 15px;
     border-radius: 6px;
     color: white;

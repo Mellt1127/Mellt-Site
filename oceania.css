@@ -57,7 +57,6 @@ body {
 
 .obj img { display: block; user-select: none; -webkit-user-drag: none; }
 
-/* Анимация летящего опыта */
 .exp-float {
     position: absolute;
     color: #f1c40f;

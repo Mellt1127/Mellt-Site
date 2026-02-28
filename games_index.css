@@ -255,9 +255,9 @@ body {
 }
 
 .game-link {
-    text-decoration: none; /* Убирает подчеркивание текста */
-    color: inherit;        /* Оставляет цвет текста таким, какой он был в карточке */
-    display: block;        /* Чтобы ссылка занимала всё место карточки */
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .game-link:hover {
@@ -353,7 +353,6 @@ body {
     animation: modal-shake 0.15s infinite !important;
 }
 
-/* Слой затемнения оставляем как был */
 #screen-darken {
     position: fixed;
     top: 0;

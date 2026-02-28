@@ -30,21 +30,15 @@ const eyeImg = document.getElementById('eye-sprite');
 const darkenLayer = document.getElementById('screen-darken');
 const body = document.body;
 
-// Ждем, пока всё загрузится
 document.addEventListener('DOMContentLoaded', function() {
     const eye = document.getElementById('eye-sprite');
     const darken = document.getElementById('screen-darken');
-    const modal = document.getElementById('modal'); // Твое модальное окно
+    const modal = document.getElementById('modal');
 
     if (eye && modal) {
         eye.addEventListener('mouseenter', () => {
-            // 1. Открываем глаз
             eye.src = 'texture/eye_open.png';
-            
-            // 2. Начинаем медленно темнить экран
             darken.style.opacity = '0.8';
-    
-            // 3. Через 1.2 секунды начинаем тряску
             setTimeout(() => {
                 if (darken.style.opacity === '0.8') {
                     modal.classList.add('shake-active');
@@ -53,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         eye.addEventListener('mouseleave', () => {
-            // Возвращаем всё как было
             eye.src = 'texture/eye_close.png';
             darken.style.opacity = '0';
             modal.classList.remove('shake-active');
