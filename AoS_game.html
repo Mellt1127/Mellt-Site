@@ -4,35 +4,9 @@
 <meta charset="utf-8" />
  <title>Adventure of Spark</title>
     <link rel="icon" type="image/png" href="texture/spark.png">
+     <link type="text/css" rel="stylesheet" href="AoS.css">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ui-bg: rgba(0,0,0,.65);
-    --ui-fg: #fff; }
-  *{box-sizing:border-box}
-  body{margin:0;overflow:hidden;background:#9fd3ff;font-family:'Press Start 2P',cursive;image-rendering:pixelated}
-  canvas{display:block;width:100vw;height:100vh}
-  #hud{position:fixed;top:8px;left:8px;color:var(--ui-fg);font-size:.75rem;z-index:10;text-shadow:1px 1px 0 #000}
-  #dayNight{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:var(--ui-fg);padding:6px 10px;border-radius:6px;font-size:.7rem;z-index:10}
-  #buttons{position:fixed;top:8px;right:8px;display:flex;gap:8px;z-index:12}
-  .btn{background:var(--ui-bg);color:var(--ui-fg);border:none;border-radius:6px;padding:6px 10px;font-size:.7rem;cursor:pointer}
-  #tooltip{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:#ffef8a;padding:8px 12px;border-radius:6px;font-size:.78rem;opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;z-index:20}
-  #warn{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:#ffd0d0;padding:6px 10px;border-radius:6px;font-size:.72rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
-  #help{position:fixed;top:48px;right:8px;background:var(--ui-bg);color:var(--ui-fg);padding:10px;border-radius:10px;font-size:.7rem;display:none;z-index:15;max-width:min(380px,90vw);line-height:1.6}
-  #inventory,#tools{position:fixed;bottom:18px;display:flex;gap:8px;background:var(--ui-bg);padding:8px;border-radius:10px;z-index:12}
-  #inventory{left:50%;transform:translateX(-50%)}
-  #tools{right:10px}
-  .slot{width:42px;height:42px;border:2px solid #555;background:#222 center/cover no-repeat;position:relative;cursor:pointer}
-  .slot.active{border-color:gold;box-shadow:0 0 8px gold}
-  .count{position:absolute;bottom:1px;right:2px;font-size:.6rem;color:#fff;text-shadow:1px 1px 0 #000}
-  #craftBtn{position:fixed;right:10px;bottom:120px;z-index:12}
-  #craftMenu{position:fixed;right:10px;bottom:170px;display:none;flex-direction:column;gap:8px;background:var(--ui-bg);padding:12px;border-radius:10px;z-index:15;width:280px}
-  .recipe{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);padding:8px;border-radius:8px;font-size:.7rem;color:#fff;cursor:pointer}
-  .recipe:hover{background:rgba(255,255,255,.12)}
-  .recipe img{width:26px;height:26px;image-rendering:pixelated}
-  #blockName{position:fixed;background:var(--ui-bg);color:#fff;padding:6px 8px;border-radius:6px;font-size:.72rem;pointer-events:none;transform:translate(-50%,-100%);display:none;z-index:30}
-</style>
 </head>
 <body>
   <div id="hud"></div>
@@ -43,24 +17,28 @@
     <button id="craftBtn" class="btn">🧰Крафт🧰</button>
   </div>
   <div id="help">
-  WASD/Стрелки — Ходьба/Прыжок<br>
-    ЛКМ — ставить блок • ПКМ — ломать блок (дистанция ≤ 5 блоков)<br>
-    1–9 — быстрый выбор слота • R — открыть/закрыть крафт<br>
-    Рядом с верстаком — крафт печи • Рядом с печью — переплавка железа<br>
+    WASD/Стрелки — Ходьба/Прыжок<br>
+    ПКМ — ломать блок (дистанция ≤ 5 блоков)<br>
+    ЛКМ — ставить блок <br>
+    1–9 — быстрый выбор слота <br>
+    R — открыть/закрыть крафт<br>
+    Рядом с верстаком — крафт печи<br>
+    Рядом с печью — переплавка железа<br>
     Факелы и печь светят ночью <br>
-    В воздухе блок не ставится — только рядом с существующим!
+    В воздухе блок не ставится — только рядом с существующим! 
   </div>
+
   <div id="tooltip"></div>
   <div id="warn"></div>
   <canvas id="cv"></canvas>
   <div id="inventory"></div>
   <div id="tools"></div>
   <div id="blockName"></div>
-  <!-- Аудио -->
-  <audio id="jumpS"><source src="sound/jump.wav" type="audio/wav"></audio>
+    <audio id="jumpS"><source src="sound/jump.wav" type="audio/wav"></audio>
   <audio id="breakS"><source src="sound/break.wav" type="audio/wav"></audio>
   <audio id="walkS"><source src="sound/walk.wav" type="audio/wav"></audio>
   <audio id="bgm" loop><source src="sound/background.mp3" type="audio/mp3"></audio>
+
 <script>
 /* =================== КОНСТАНТЫ =================== */
 const TILE = 42;
@@ -70,11 +48,9 @@ const WORLD_H = 100;
 const PLAYER_W = TILE*0.8, PLAYER_H = TILE*1.8;
 // CAMERA_SMOOTH = 1 -> камера центрируется прямо на игроке
 const CAMERA_SMOOTH = 1.0;
-
-const DAY_LEN = 90;      // сек
+const DAY_LEN = 180;      // сек
 const NIGHT_LEN = 60;      // сек
 const TRANSITION = 3;    // сек
-
 const BLEND = 4;
 const PLACE_DIST = TILE*5;
 const BREAK_DIST = TILE*5;
@@ -110,7 +86,7 @@ function isSolid(b){
     b===BLOCKS.AIR || b===BLOCKS.CAVE_AIR || b===BLOCKS.FLOWER || b===BLOCKS.TALL_GRASS ||
     b===BLOCKS.SNOW_TALL_GRASS || b===BLOCKS.MOON_FLOWER || b===BLOCKS.LEAVES ||
     b===BLOCKS.SNOW || b===BLOCKS.WOOD_BG || b===BLOCKS.DEAD_BUSH || b===BLOCKS.CACTUS || b===BLOCKS.SNOW || 
-    b===BLOCKS.SNOW_FLOWER
+    b===BLOCKS.SNOW_FLOWER || b===BLOCKS.WORKBENCH
   );
 }
 function isPassable(b){ return !isSolid(b); }
@@ -710,6 +686,7 @@ function drawSnow(){
 }
 
 function render(){
+  
   drawSky();
 
   const sx=Math.max(0, Math.floor(cam.x/TILE));
@@ -739,6 +716,22 @@ function render(){
     }
   }
 
+  function drawSkyObjects() {
+  // Рисуем солнце/луну относительно камеры, но чтобы они двигались медленнее (эффект параллакса)
+  const sunX = (canvas.width / 2) - (camera.x * 0.1); 
+  const sunY = 100; // Высота солнца
+
+  ctx.fillStyle = (isNight) ? "#f1f2f6" : "#fbc531"; // Луна или Солнце
+  ctx.beginPath();
+  ctx.arc(sunX, sunY, 40, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Добавим свечение (Glow)
+  ctx.shadowBlur = 50;
+  ctx.shadowColor = ctx.fillStyle;
+  ctx.fill();
+  ctx.shadowBlur = 0; // Сбрасываем, чтобы блоки не светились
+}
   // furnace animation
   furnaceAnimTimer += 16;
   if(furnaceAnimTimer>300){ furnaceAnimTimer=0; furnaceAnimState ^= 1; }
@@ -768,14 +761,6 @@ function render(){
     catch(e){ cx.fillStyle='#FF5722'; cx.fillRect(-player.w/2, -player.h/2, player.w, player.h); }
   } else { cx.fillStyle='#FF5722'; cx.fillRect(-player.w/2, -player.h/2, player.w, player.h); }
   cx.restore();
-
-  // ночное освещение
-
-  // звёзды на небе
-
-  
-
- 
 
   // снег
   drawSnow();
@@ -889,13 +874,14 @@ function addRecipeEl(imgs,text,onClick){
   el.onclick = onClick;
   craftMenu.appendChild(el);
 }
-function nearBlock(targetId, radius=3){
-  const gx = Math.floor((player.x+player.w/2)/TILE);
-  const gy = Math.floor((player.y+player.h/2)/TILE);
-  for(let y=gy-radius;y<=gy+radius;y++){
-    for(let x=gx-radius;x<=gx+radius;x++){
-      if(x<0||x>=WORLD_W||y<0||y>=WORLD_H) continue;
-      if(world[y][x]===targetId) return true;
+function nearBlock(targetId) {
+  const px = Math.floor((player.x + player.w/2) / TILE);
+  const py = Math.floor((player.y + player.h/2) / TILE);
+  
+  // Проверяем блоки в радиусе 2-3 клеток вокруг игрока
+  for(let x = px - 2; x <= px + 2; x++) {
+    for(let y = py - 2; y <= py + 2; y++) {
+      if(world[x] && world[x][y] === targetId) return true;
     }
   }
   return false;
@@ -958,15 +944,41 @@ function buildCraftMenu(){
   }
 }
 /* =================== АУДИО =================== */
-function tryPlay(el){
-  try{ if(el) el.currentTime = 0, el.play(); } catch(e){ /* игнор */ }
+let audioStarted = false; // Флаг, чтобы знать, включили ли мы звук
+
+function startAudio() {
+  if (audioStarted) return; // Если уже включили — ничего не делаем
+  audioEnabled = true;
+  audioBtn.textContent = '🔊Звук🔊';
+  
+  try {
+    bgm.play().catch(() => {}); // Запускаем музыку
+    audioStarted = true;
+  } catch (e) {}
 }
-audioBtn.addEventListener('click', ()=>{
+
+// Попытка включить звук при ЛЮБОМ клике по экрану
+window.addEventListener('mousedown', startAudio);
+window.addEventListener('keydown', startAudio);
+window.addEventListener('touchstart', startAudio);
+
+function tryPlay(el) {
+  if (!audioEnabled) return; // Если звук выключен в меню — не играем
+  try { if (el) { el.currentTime = 0; el.play(); } } catch (e) {}
+}
+
+audioBtn.addEventListener('click', (e) => {
+  e.stopPropagation(); // Чтобы клик по кнопке не срабатывал дважды
   audioEnabled = !audioEnabled;
-  audioBtn.textContent = audioEnabled? '🔊 Звук' : '🔇 Звук';
-  if(audioEnabled) try { bgm.play().catch(()=>{}); } catch(e){}
-  else try{ bgm.pause(); } catch(e){}
+  audioBtn.textContent = audioEnabled ? '🔊Звук🔊' : '🔇Звук🔇';
+  if (audioEnabled) {
+      bgm.play().catch(() => {});
+      audioStarted = true;
+  } else {
+      bgm.pause();
+  }
 });
+
 helpBtn.addEventListener('click', ()=>{ showHelp = !showHelp; help.style.display = showHelp? 'block' : 'none'; });
 /* =================== Логика печей и таймеров =================== */
 function tickFurnaces(dt){
@@ -1024,6 +1036,21 @@ function loop(){
   requestAnimationFrame(loop);
 }
 
+function updateSkyColor() {
+  const px = Math.floor((player.x + player.w / 2) / TILE);
+  const biome = getBiome(px); // Твоя функция определения биома
+
+  let color = "#9fd3ff"; // Обычный цвет
+
+  if (biome === 'desert') color = "#ffeaa7"; // "Жаркое" небо для пустыни
+  if (biome === 'ice') color = "#d1f2ff";   // "Холодное" небо для зимы
+  
+  // Если сейчас ночь (проверяй свою переменную времени)
+  if (isNight) color = "#0c0d1b"; 
+
+  document.body.style.setProperty('--sky-color', color);
+}
+
 /* =================== ЗАГРУЗКА + СТАРТ =================== */
 loadTextures(()=>{
   window.addEventListener('keydown', (e)=>{
@@ -1047,6 +1074,5 @@ setTimeout(()=>{
   }
 }, 2500);
 </script>
-<script src="Game.js"></script>
 </body>
 </html>

@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #000; /* Черный фон, пока канвас не прогрузится */
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+}
+ :root{
+    --ui-bg: rgba(0,0,0,.65);
+    --ui-fg: #fff; }
+  *{box-sizing:border-box}
+  canvas{display:block;width:100vw;height:100vh}
+  #hud{position:fixed;top:8px;left:8px;color:var(--ui-fg);font-size:.75rem;z-index:10;text-shadow:1px 1px 0 #000}
+  canvas{display:block;width:100vw;height:100vh}
+  #hud{position:fixed;top:8px;left:8px;color:var(--ui-fg);font-size:.75rem;z-index:10;text-shadow:1px 1px 0 #000}
+  #dayNight{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:var(--ui-fg);padding:6px 10px;border-radius:6px;font-size:.7rem;z-index:10}
+  #buttons{position:fixed;top:8px;right:8px;display:flex;gap:8px;z-index:12}
+  .btn{background:var(--ui-bg);color:var(--ui-fg);border:none;border-radius:6px;padding:6px 10px;font-size:.7rem;cursor:pointer}
+  #tooltip{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:#ffef8a;padding:8px 12px;border-radius:6px;font-size:.78rem;opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;z-index:20}
+  #warn{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:var(--ui-bg);color:#ffd0d0;padding:6px 10px;border-radius:6px;font-size:.72rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+  #help{position:fixed;top:48px;right:8px;background:var(--ui-bg);color:var(--ui-fg);padding:10px;border-radius:10px;font-size:.7rem;display:none;z-index:15;max-width:min(380px,90vw);line-height:1.6}
+  #inventory,#tools{position:fixed;bottom:18px;display:flex;gap:8px;background:var(--ui-bg);padding:8px;border-radius:10px;z-index:12}
+  #inventory{left:50%;transform:translateX(-50%)}
+  #tools{right:10px}
+  .slot{width:42px;height:42px;border:2px solid #555;background:#222 center/cover no-repeat;position:relative;cursor:pointer}
+  .slot.active{border-color:gold;box-shadow:0 0 8px gold}
+  .count{position:absolute;bottom:1px;right:2px;font-size:.6rem;color:#fff;text-shadow:1px 1px 0 #000}
+  #craftBtn{position:fixed;right:10px;bottom:120px;z-index:12}
+  #craftMenu{position:fixed;right:10px;bottom:170px;display:none;flex-direction:column;gap:8px;background:var(--ui-bg);padding:12px;border-radius:10px;z-index:15;width:280px}
+  .recipe{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);padding:8px;border-radius:8px;font-size:.7rem;color:#fff;cursor:pointer}
+  .recipe:hover{background:rgba(255,255,255,.12)}
+  .recipe img{width:26px;height:26px;image-rendering:pixelated}
+  #blockName{position:fixed;background:var(--ui-bg);color:#fff;padding:6px 8px;border-radius:6px;font-size:.72rem;pointer-events:none;transform:translate(-50%,-100%);display:none;z-index:30}
