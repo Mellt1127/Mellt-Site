@@ -54,7 +54,7 @@ const TRANSITION = 3;    // сек
 const BLEND = 4;
 const PLACE_DIST = TILE*5;
 const BREAK_DIST = TILE*5;
-const WALK_SOUND_COOLDOWN = 3000; // мс
+const WALK_SOUND_COOLDOWN = 850; // мс
 
 /* =================== БЛОКИ =================== */
 const BLOCKS = {
@@ -62,7 +62,7 @@ const BLOCKS = {
   MOON_ROCK:10, MOON_FLOWER:11, COAL:12, IRON:13, CAVE_AIR:14, WORKBENCH:15, COAL_ITEM:16,
   SNOW:17, SNOW_GRASS:18, SNOW_DIRT:19, ICE:20, WOOD_BG:21,
   SAND:22, DEAD_BUSH:23, CACTUS:24, FURNACE_OFF:25, FURNACE_ON:26, TORCH:27, IRON_INGOT:28,
-  SNOW_TALL_GRASS:29, SNOW_FLOWER:30, HARD_SAND:31
+  SNOW_TALL_GRASS:29, SNOW_FLOWER:30, HARD_SAND:31, BG_PLANKS:32
 };
 
 const BLOCK_NAMES = {
@@ -77,7 +77,7 @@ const BLOCK_NAMES = {
   [BLOCKS.SAND]:"Песок",[BLOCKS.DEAD_BUSH]:"Мёртвый куст",[BLOCKS.CACTUS]:"Кактус",
   [BLOCKS.FURNACE_OFF]:"Печь",[BLOCKS.FURNACE_ON]:"Печь (горит)",[BLOCKS.TORCH]:"Факел",
   [BLOCKS.IRON_INGOT]:"Железный слиток",[BLOCKS.SNOW_TALL_GRASS]:"Снежная травинка",
-  [BLOCKS.SNOW_FLOWER]:"Снежный цветок", [BLOCKS.HARD_SAND]:"Прочный песок"
+  [BLOCKS.SNOW_FLOWER]:"Снежный цветок", [BLOCKS.HARD_SAND]:"Прочный песок", [BLOCKS.BG_PLANKS]:"Задняя доска"
 };
 
 // ПРОХОДИМЫЕ БЛОКИ
@@ -86,7 +86,7 @@ function isSolid(b){
     b===BLOCKS.AIR || b===BLOCKS.CAVE_AIR || b===BLOCKS.FLOWER || b===BLOCKS.TALL_GRASS ||
     b===BLOCKS.SNOW_TALL_GRASS || b===BLOCKS.MOON_FLOWER || b===BLOCKS.LEAVES ||
     b===BLOCKS.SNOW || b===BLOCKS.WOOD_BG || b===BLOCKS.DEAD_BUSH || b===BLOCKS.CACTUS || b===BLOCKS.SNOW || 
-    b===BLOCKS.SNOW_FLOWER || b===BLOCKS.WORKBENCH
+    b===BLOCKS.SNOW_FLOWER || b===BLOCKS.WORKBENCH || b===BLOCKS.BG_PLANKS || b===BLOCKS.TORCH
   );
 }
 function isPassable(b){ return !isSolid(b); }
@@ -126,6 +126,7 @@ TEX.blocks[BLOCKS.FURNACE_ON]="texture/furnace_on1.png";
 TEX.blocks[BLOCKS.TORCH]="texture/torch.png";
 TEX.blocks[BLOCKS.SNOW_FLOWER]="texture/snow_flower.png";
 TEX.blocks[BLOCKS.HARD_SAND]="texture/hard_sand.png";
+TEX.blocks[BLOCKS.BG_PLANKS]="texture/bg_planks.png";
 
 const ITEMS = {
   axe:"texture/axe.png",
@@ -255,7 +256,7 @@ function refreshInventory(){
     BLOCKS.GRASS,BLOCKS.DIRT,BLOCKS.STONE,BLOCKS.SAND,BLOCKS.SNOW,BLOCKS.ICE,BLOCKS.PLANKS,BLOCKS.WOOD,
     BLOCKS.LEAVES,BLOCKS.FLOWER,BLOCKS.TALL_GRASS,BLOCKS.SNOW_TALL_GRASS,BLOCKS.MOON_ROCK,BLOCKS.MOON_FLOWER,
     BLOCKS.COAL_ITEM,BLOCKS.IRON,BLOCKS.IRON_INGOT,BLOCKS.WORKBENCH,BLOCKS.FURNACE_OFF,BLOCKS.TORCH, BLOCKS.SNOW_DIRT, BLOCKS.SNOW_GRASS, 
-    BLOCKS.DEAD_BUSH,BLOCKS.CACTUS,BLOCKS.SNOW_FLOWER
+    BLOCKS.DEAD_BUSH,BLOCKS.CACTUS,BLOCKS.SNOW_FLOWER,BLOCKS.BG_PLANKS,
   ];
   for(const id of order){
     const cnt = player.inv[id]||0;
@@ -372,7 +373,7 @@ function genWorld(){
     return Math.max(0, Math.min(1, dist));
 }
     // деревья фоновые
-if(Math.random() > 0.975 && blendFactor(x, desertStart, desertEnd) < 0.5){
+if(Math.random() > 0.9 && blendFactor(x, desertStart, desertEnd) < 0.5){
   // Ищем именно GRASS или SNOW_GRASS
   function findGrass(x){
     for(let y = 0; y < WORLD_H; y++){
@@ -391,9 +392,6 @@ if(Math.random() > 0.975 && blendFactor(x, desertStart, desertEnd) < 0.5){
   for(let yy = ty; yy > ty - h; yy--){
     if(yy >= 0) world[yy][tx] = BLOCKS.WOOD_BG;
   }
-
-
-     
     const r = 3; // радиус кроны
     const cx = tx;
     const cy = ty - h; 
@@ -418,6 +416,44 @@ if(Math.random() > 0.975 && blendFactor(x, desertStart, desertEnd) < 0.5){
       }
     }
   }
+
+/* =================== МАЛЕНЬКОЕ ЛЕДЯНОЕ ОЗЕРО (КОМПАКТНОЕ) =================== */
+// Выбираем случайную точку в снежном биоме
+const lakeX = Math.floor(snowStart + Math.random() * (snowEnd - snowStart));
+const lakeWidth = 5; // Ширина верха (примерно 5-6 блоков)
+
+// Находим уровень земли в этой точке
+const surfY = findSurfaceY(lakeX);
+
+for (let x = lakeX - 2; x <= lakeX + 3; x++) {
+    if (x < 0 || x >= WORLD_W) continue;
+
+    const dist = Math.abs(x - lakeX);
+    let depth = 0;
+
+    // Формируем форму: в центре глубже, по бокам мельче
+    if (dist === 0) depth = 2;      // Центр: 3 блока в глубину
+    else if (dist === 1) depth = 2; // Рядом: 2 блока
+    else if (dist === 2) depth = 1; // Края: 1 блок
+
+    if (depth > 0) {
+        for (let d = 0; d < depth; d++) {
+            const curY = surfY + d;
+            if (curY < WORLD_H) {
+                // Очищаем всё, что было выше (снег, траву)
+                if (d === 0) {
+                    if (world[curY - 1][x] !== BLOCKS.AIR) world[curY - 1][x] = BLOCKS.AIR;
+                }
+                // Заменяем землю на ЛЁД
+                world[curY][x] = BLOCKS.ICE;
+            }
+        }
+        // Делаем дно каменным для красоты
+        if (surfY + depth < WORLD_H) {
+            world[surfY + depth][x] = BLOCKS.SAND;
+        }
+    }
+}
 
   genCaves();
   genMines();
@@ -500,10 +536,8 @@ function loadTextures(cb){
   list.push({k:'player_left',url:TEX.player_left});
   for(const [id,url] of Object.entries(TEX.blocks)) list.push({k:'b_'+id,url});
   for(const [id,url] of Object.entries(ITEMS)) list.push({k:'i_'+id,url});
-
   let done=0;
   if(list.length===0) return cb();
-
   for(const it of list){
     const img = new Image();
     img.onload=()=>{
@@ -622,7 +656,7 @@ function updateDay(dt){
   if(timeSec >= len){
     timeSec = 0;
     isDay = !isDay;
-    dayNightDiv.textContent = isDay?'День':'🌑Ночь🌑';
+    dayNightDiv.textContent = isDay?'День':'Ночь';
     trans = 0.0001;
   }
   if(trans>0 && trans<1){
@@ -716,36 +750,6 @@ function render(){
     }
   }
 
-  function drawSkyObjects() {
-  // Рисуем солнце/луну относительно камеры, но чтобы они двигались медленнее (эффект параллакса)
-  const sunX = (canvas.width / 2) - (camera.x * 0.1); 
-  const sunY = 100; // Высота солнца
-
-  ctx.fillStyle = (isNight) ? "#f1f2f6" : "#fbc531"; // Луна или Солнце
-  ctx.beginPath();
-  ctx.arc(sunX, sunY, 40, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Добавим свечение (Glow)
-  ctx.shadowBlur = 50;
-  ctx.shadowColor = ctx.fillStyle;
-  ctx.fill();
-  ctx.shadowBlur = 0; // Сбрасываем, чтобы блоки не светились
-}
-  // furnace animation
-  furnaceAnimTimer += 16;
-  if(furnaceAnimTimer>300){ furnaceAnimTimer=0; furnaceAnimState ^= 1; }
-  for(let y=sy;y<ey;y++){
-    for(let x=sx;x<ex;x++){
-      const b=world[y][x];
-      if(b===BLOCKS.FURNACE_ON){
-        const dx=x*TILE-cam.x, dy=y*TILE-cam.y;
-        const texKey = Object.keys(textures).find(k=>k.includes('b_') && textures[k] && textures[k].src && textures[k].src.includes('furnace_on'));
-        if(texKey) cx.drawImage(textures[texKey],dx,dy,TILE,TILE);
-        else { cx.fillStyle='#b35400'; cx.fillRect(dx,dy,TILE,TILE); }
-      }
-    }
-  }
   // игрок — теперь при движении (включая воздух) показываем анимацию шагов
   let ptex = textures.player_stand;
   if(player.walking){
@@ -836,7 +840,7 @@ function onMouse(e){
     //ЛОМАНИЯ БЛОКОВ
     if((t===BLOCKS.STONE||t===BLOCKS.MOON_ROCK||t===BLOCKS.COAL||t===BLOCKS.IRON||t===BLOCKS.FURNACE_OFF||t===BLOCKS.FURNACE_ON ||t===BLOCKS.HARD_SAND ||t===BLOCKS.ICE) && !player.tools.pickaxe) need='Кирка';
     if((t===BLOCKS.DIRT||t===BLOCKS.GRASS||t===BLOCKS.SNOW_DIRT||t===BLOCKS.SNOW_GRASS||t===BLOCKS.SAND||t===BLOCKS.SNOW) && !player.tools.shovel) need='Лопата';
-    if((t===BLOCKS.WOOD||t===BLOCKS.WOOD_BG||t===BLOCKS.PLANKS||t===BLOCKS.WORKBENCH) && !player.tools.axe) need='Топор';
+    if((t===BLOCKS.WOOD||t===BLOCKS.WOOD_BG||t===BLOCKS.PLANKS||t===BLOCKS.WORKBENCH |t===BLOCKS.BG_PLANKS) && !player.tools.axe) need='Топор';
     if(need){ showWarn('Нужна: '+need); return; }
     if(t!==BLOCKS.BEDROCK){
       world[gy][gx] = (t===BLOCKS.FURNACE_ON ? BLOCKS.CAVE_AIR : BLOCKS.AIR);
@@ -908,6 +912,11 @@ function buildCraftMenu(){
     } else showWarn('Нужно: 2 доски, 1 уголь');
   });
 
+   addRecipeEl(["texture/planks.png","texture/planks.png","texture/arrow.png","texture/bg_planks.png"],"Задние доски ×4", ()=>{
+    if(useInv(BLOCKS.PLANKS,2)){ addInv(BLOCKS.BG_PLANKS,4); showTip('4 Задних доски готовы'); }
+    else showWarn('Нужно: 2 доски');
+  });
+
   // Печь доступна в меню ТОЛЬКО если рядом есть верстак (добавляется динамически)
   if(nearBlock(BLOCKS.WORKBENCH)){
     addRecipeEl(["texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/planks.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/stone.png","texture/arrow.png","texture/furnace_off.png"],
@@ -945,7 +954,6 @@ function buildCraftMenu(){
 }
 /* =================== АУДИО =================== */
 let audioStarted = false; // Флаг, чтобы знать, включили ли мы звук
-
 function startAudio() {
   if (audioStarted) return; // Если уже включили — ничего не делаем
   audioEnabled = true;
@@ -968,7 +976,7 @@ function tryPlay(el) {
 }
 
 audioBtn.addEventListener('click', (e) => {
-  e.stopPropagation(); // Чтобы клик по кнопке не срабатывал дважды
+  e.stopPropagation();
   audioEnabled = !audioEnabled;
   audioBtn.textContent = audioEnabled ? '🔊Звук🔊' : '🔇Звук🔇';
   if (audioEnabled) {
@@ -1074,5 +1082,6 @@ setTimeout(()=>{
   }
 }, 2500);
 </script>
+
 </body>
 </html>
