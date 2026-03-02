@@ -15,8 +15,8 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 
 .Logo{
     position: relative;
-    width: 111px;
-    height: 111px;
+    width: 9%;
+    height: auto;
     left: 3%;
          transition: 0.6s;
 }
@@ -27,7 +27,7 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 .Menu {
     position: absolute;
     width: 98%;
-    height: 111px;
+    height: 19.5%;
     border-color: black;
     border-radius: 25px;
     background-color: #005c2e;
@@ -36,7 +36,7 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 .Menu-Menu {  
     position: absolute;
     width: 20%;
-    height: 75px;
+    height: 13%;
     border: 4px solid black;
     border-radius: 50px;
     background-color: #18c63b;
@@ -59,7 +59,7 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 .Menu-Wiki {  
     position: absolute;
     width:20%;
-    height: 75px;
+    height: 13%;
     border: 4px solid black;
     border-radius: 50px;
     background-color: #18c63b;
@@ -73,24 +73,16 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     transition: 0.3s;
 }
 
-.Menu-Wiki {
-    background-color: #027c02;
-    box-shadow: inset 0 0 5px #000;
-    transform: translateY(2px);
-    color: #000;
-}
-
 .Menu-Wiki:hover{  
   background: #236b18;      
   transform: scale(1.1);      
   box-shadow: 0 0 20px #000000;
 }
 
-
 .Menu-Game {  
     position: absolute;
     width: 20%;
-    height: 75px;
+    height: 13%;
     border: 4px solid black;
     border-radius: 50px;
     background-color: #18c63b;
@@ -104,6 +96,8 @@ h1, h2, .Menu, .wiki-sidebar h2 {
     transition: 0.3s;
 }
 
+.Menu-Wiki { background-color: #027c02; box-shadow: inset 0 0 5px #000; transform: translateY(2px); color: #000; }
+
 .Menu-Game:hover{  
   background: #236b18;      
   transform: scale(1.1);      
@@ -112,8 +106,8 @@ h1, h2, .Menu, .wiki-sidebar h2 {
 
 .About{
     position: relative;
-    width: 111px;
-    height: 111px;;
+    width: 9%;
+    height: auto;;
     left: 80%;
          transition: 0.4s;
 }
