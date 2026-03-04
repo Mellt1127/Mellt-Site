@@ -17,6 +17,8 @@ const phrases = [
     "Ты меня отвлекаешь...",
     "Похоже, ты такой же жалкий, как остальные...\n Оно и неудивительно...",
     "Жалкая душа..",
+    "УЙДИ ОТ СЮДА!",
+    "Миф №3: Я выше всего и всех",
 ];
 
 eye.addEventListener('mouseenter', () => {
@@ -46,25 +48,21 @@ eye.addEventListener('mouseleave', () => {
 });
 
 function showFinalScare() {
-    // 1. Добавляем класс тряски всему телу страницы
     document.body.classList.add('shake-screen');
-    
-    // 2. Создаем резкую красную вспышку на весь экран
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.top = '0';
     overlay.style.left = '0';
     overlay.style.width = '100vw';
     overlay.style.height = '100vh';
-    overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.9)'; // Ярко-красный
+    overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.9)';
     overlay.style.display = 'flex';
     overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '10000';
-    overlay.style.cursor = 'none'; // Убираем курсор для жути
+    overlay.style.cursor = 'none';
 
-    // 3. Текст "ХВАТИТ"
     const scareText = document.createElement('h1');
     scareText.textContent = 'Х В А Т И Т';
     scareText.style.color = 'black';
@@ -76,7 +74,6 @@ function showFinalScare() {
     overlay.appendChild(scareText);
     document.body.appendChild(overlay);
 
-    // 4. Через 1.5 секунды перекидываем на главную
     setTimeout(() => {
         window.location.href = 'index.html'; 
     }, 1500);
