@@ -21,7 +21,6 @@ function updateUI() {
     document.getElementById('en-val').innerText = player.energy;
     document.getElementById('exp-val').innerText = player.exp;
     document.getElementById('next-lvl-val').innerText = player.nextLvl;
-    
     document.getElementById('exp-fill').style.width = (player.exp / player.nextLvl * 100) + "%";
     document.getElementById('en-fill').style.width = (player.energy / player.maxEnergy * 100) + "%";
 }

@@ -37,11 +37,17 @@
 <section class="intro">
     <h1>Добро пожаловать в сайт "Меллта"!</h1>
     <p>Это мой личный уголок, </p>
-    <p>где я собираю свои HTML проекты</p>
+    <p>где я собираю свои проекты</p>
     <p>и делюсь прогрессом разработки!</p>
   </section>
 
 <div class="news-container">
+
+    <div class="news-green">
+        <span class="news-date">05.03.2026</span>
+        <p>Впервые добавлена система (LocaleStorage) в страницах Вики и Океании.</p>
+        <p>В главной странице появился помощник который может ответить на некоторые вопросы!</p>
+    </div>
     
       <div class="news-green">
         <span class="news-date">04.03.2026</span>
@@ -95,5 +101,29 @@
        
     </ul>
 </div>
+
+<img src="texture/mellt_icon.png" alt="Помощник Меллта" id="mellt-assistant">
+
+<div id="mellt-chatbox">
+    <div class="chat-header">
+        <span class="chat-title">Меллт</span>
+        <button class="close-chat" onclick="toggleChatbox()">X</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <p class="mellt-message">Привет, я Меллт! Что тебя интересует?</p>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="user-input" placeholder="Спроси меня о чём-нибудь..." disabled>
+        <button id="send-button" disabled>Отправить</button>
+        <div class="popular-commands" id="popular-commands">
+            <span class="command-bubble" data-command="Кто ты такой?">Кто ты?</span>
+            <span class="command-bubble" data-command="Игры">Игры</span>
+            <span class="command-bubble" data-command="Расскажи о сайте">О сайте</span>
+            <span class="command-bubble" data-command="Пока!">Пока!</span>
+
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
