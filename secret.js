@@ -19,12 +19,14 @@ const phrases = [
     "Жалкая душа..",
     "УЙДИ ОТ СЮДА!",
     "Миф №3: Я выше всего и всех",
+    "...",
+    "Я Боггг!\n Хехехехехе)",
 ];
 
 eye.addEventListener('mouseenter', () => {
     hoverCount++; 
     
-    if (hoverCount >= 10) {
+    if (hoverCount >= 15) {
         showFinalScare();
         return;
     }
@@ -32,7 +34,7 @@ eye.addEventListener('mouseenter', () => {
     eye.style.backgroundImage = "url('texture/eye_open.png')";
     
     if (isFirstTime) {
-        textElement.textContent = "О, здравствуй, путник...";
+        textElement.textContent = "Здравствуй, путник.....";
         isFirstTime = false;
     } else {
         const randomIndex = Math.floor(Math.random() * phrases.length);
