@@ -1,11 +1,3 @@
-body {
-    margin: 0;
-    background: #2980b9; 
-    font-family: 'Arial', sans-serif;
-    color: white;
-    overflow: hidden;
-}
-
 .ui {
     position: fixed;
     top: 10px;
@@ -71,4 +63,66 @@ body {
 @keyframes floatUp {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-50px); opacity: 0; }
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #0077be; /* Запасной цвет воды */
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+}
+
+/* Эффект живой воды */
+#game-world {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, #00aaff 0%, #0077be 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Твой остров как текстура */
+#island {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    
+    /* Твоя новая бесшовная текстура */
+    background-image: url('texture/grass_sand_texture.png'); 
+    background-size: 200px; /* Размер одного "квадратика" текстуры. Подбери под себя */
+    background-repeat: repeat; /* Текстура будет бесконечно повторяться */
+    
+    /* Делаем форму острова круглой или овальной */
+    border-radius: 50%; 
+    
+    /* Добавляем мягкое размытие по краям, чтобы остров не казался вырезанным ножницами */
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.3);
+    
+    margin: 0 auto;
+    overflow: hidden; /* Чтобы объекты не вылезали за визуальную границу круга */
+}
+
+/* Красивое уведомление о левел-апе */
+.level-up-anim {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    font-weight: bold;
+    color: #ffcc00;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5), 2px 2px 0 #fff;
+    z-index: 1000;
+    pointer-events: none;
+    animation: levelUpPop 2s forwards;
+      text-align: center;
+}
+
+@keyframes levelUpPop {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    80% { transform: translate(-50%, -100%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -150%) scale(1); opacity: 0; }
 }

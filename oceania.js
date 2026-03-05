@@ -1,4 +1,7 @@
-const player = {
+// 1. Инициализация данных (пытаемся загрузить из памяти или ставим дефолт)
+const savedData = JSON.parse(localStorage.getItem('oceania_player'));
+
+const player = savedData || {
     exp: 0,
     nextLvl: 100,
     lvl: 1,
@@ -7,6 +10,11 @@ const player = {
 };
 
 const island = document.getElementById('island');
+
+// ФУНКЦИЯ СОХРАНЕНИЯ (вызывай её после изменений)
+function saveGame() {
+    localStorage.setItem('oceania_player', JSON.stringify(player));
+}
 
 function updateUI() {
     document.getElementById('lvl').innerText = player.lvl;
@@ -55,21 +63,29 @@ function spawnObject(type) {
 
             if (currentHP <= 0) {
                 player.exp += settings.exp;
-                
                 showFloatingText(e.clientX, e.clientY, settings.exp);
-                
                 obj.remove();
                 setTimeout(() => spawnObject(Math.random() > 0.3 ? 'grass' : 'tree'), 3000);
             }
 
             checkLevelUp();
             updateUI();
+            saveGame(); // СОХРАНЯЕМ после каждого клика
         } else {
-            alert("Нужно подождать! Энергия восстанавливается...");
         }
     };
 
     island.appendChild(obj);
+}
+
+function showLevelUpMessage(newLevel) {
+    const msg = document.createElement('div');
+    msg.className = 'level-up-anim';
+    msg.innerHTML = `LEVEL UP!<br><span style="font-size: 40px">Уровень ${newLevel}</span>`;
+    document.body.appendChild(msg);
+    
+    // Удаляем элемент после анимации
+    setTimeout(() => msg.remove(), 2000);
 }
 
 function checkLevelUp() {
@@ -77,7 +93,9 @@ function checkLevelUp() {
         player.exp -= player.nextLvl;
         player.lvl++;
         player.nextLvl = Math.round(player.nextLvl * 1.6);
-        alert("🎉 Новый уровень: " + player.lvl);
+        
+        saveGame();
+        showLevelUpMessage(player.lvl); // Вызываем красивое сообщение вместо alert
     }
 }
 
@@ -85,10 +103,13 @@ setInterval(() => {
     if (player.energy < player.maxEnergy) {
         player.energy++;
         updateUI();
+        saveGame(); // СОХРАНЯЕМ при регене энергии
     }
-}, 7000);
+}, 1000);
 
+// Спавним объекты
 for(let i = 0; i < 5; i++) spawnObject('grass');
 for(let i = 0; i < 3; i++) spawnObject('tree');
 
 updateUI();
+
