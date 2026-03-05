@@ -12,18 +12,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('.wiki-nav');
     const sections = document.querySelectorAll('.wiki-content section');
 
+    // 1. ФУНКЦИЯ ДЛЯ ПЕРЕКЛЮЧЕНИЯ (вынесли отдельно, чтобы использовать дважды)
+    function openSection(targetId) {
+        // Убираем активный класс у всех ссылок
+        links.forEach(l => l.classList.remove('active-link'));
+        // Прячем все секции
+        sections.forEach(s => s.style.display = 'none');
+
+        // Показываем нужную секцию
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+            // Находим ссылку, у которой href совпадает с id, и подсвечиваем её
+            const activeLink = document.querySelector(`.wiki-nav[href="#${targetId}"]`);
+            if (activeLink) activeLink.classList.add('active-link');
+        }
+    }
+
+    // 2. ЗАГРУЗКА: Проверяем, есть ли сохраненный раздел
+    const savedSection = localStorage.getItem('wiki_last_section');
+    if (savedSection) {
+        openSection(savedSection);
+    } else {
+        // Если зашли первый раз — открываем первый раздел по умолчанию (например, lore)
+        openSection('lore');
+    }
+
+    // 3. ОБРАБОТКА КЛИКОВ
     links.forEach(link => {
         link.onclick = function(e) {
             e.preventDefault();
             
-            links.forEach(l => l.classList.remove('active-link'));
-
-            sections.forEach(s => s.style.display = 'none');
-            
-            this.classList.add('active-link');
-          
             const targetId = this.getAttribute('href').substring(1);
-            document.getElementById(targetId).style.display = 'block';
+            
+            // Сохраняем выбор в LocalStorage
+            localStorage.setItem('wiki_last_section', targetId);
+            
+            // Переключаем визуально
+            openSection(targetId);
         };
     });
 });
