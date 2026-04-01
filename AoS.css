@@ -1,7 +1,7 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: #000; /* Черный фон, пока канвас не прогрузится */
+    background: #000;
     font-family: 'Press Start 2P', cursive;
     image-rendering: pixelated;
 }

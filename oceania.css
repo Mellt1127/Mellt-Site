@@ -68,12 +68,11 @@
 body {
     margin: 0;
     overflow: hidden;
-    background-color: #0077be; /* Запасной цвет воды */
+    background-color: #0077be;
     font-family: 'Arial', sans-serif;
     color: #fff;
 }
 
-/* Эффект живой воды */
 #game-world {
     width: 100vw;
     height: 100vh;
@@ -83,28 +82,20 @@ body {
     justify-content: center;
 }
 
-/* Твой остров как текстура */
 #island {
     position: relative;
     width: 800px;
     height: 600px;
-    
-    /* Твоя новая бесшовная текстура */
     background-image: url('texture/grass_sand_texture.png'); 
-    background-size: 200px; /* Размер одного "квадратика" текстуры. Подбери под себя */
-    background-repeat: repeat; /* Текстура будет бесконечно повторяться */
-    
-    /* Делаем форму острова круглой или овальной */
+    background-size: 200px;
+    background-repeat: repeat;
     border-radius: 50%; 
-    
-    /* Добавляем мягкое размытие по краям, чтобы остров не казался вырезанным ножницами */
     box-shadow: inset 0 0 50px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.3);
     
     margin: 0 auto;
-    overflow: hidden; /* Чтобы объекты не вылезали за визуальную границу круга */
+    overflow: hidden;
 }
 
-/* Красивое уведомление о левел-апе */
 .level-up-anim {
     position: fixed;
     top: 50%;

@@ -55,7 +55,6 @@ left: 2%;
 top: 3%
         }
 
- 
 .Logo:hover{  
   transform: scale(1.6);      
 }
@@ -172,19 +171,18 @@ top: 3%
             transform: scale(1.1);
         }
 
-        /* Стили для модального окна */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Затемнение фона */
-    display: none; /* Скрыто по умолчанию */
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 200000;
-    backdrop-filter: blur(5px); /* Размытие заднего плана */
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
@@ -207,7 +205,7 @@ top: 3%
 #modalText {
     line-height: 1.6;
     font-size: 0.9rem;
-    white-space: pre-line; /* Чтобы работали переносы \n */
+    white-space: pre-line;
     margin: 20px 0;
 }
 
@@ -299,7 +297,6 @@ function closeModal() {
     document.getElementById('modalOverlay').style.display = 'none';
 }
 
-// Обновленные функции кнопок
 function showControls() {
     const title = translations[currentLang].controls;
     const text = translations[currentLang].controlsText;

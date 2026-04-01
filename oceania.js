@@ -1,4 +1,3 @@
-// 1. Инициализация данных (пытаемся загрузить из памяти или ставим дефолт)
 const savedData = JSON.parse(localStorage.getItem('oceania_player'));
 
 const player = savedData || {
@@ -11,7 +10,6 @@ const player = savedData || {
 
 const island = document.getElementById('island');
 
-// ФУНКЦИЯ СОХРАНЕНИЯ (вызывай её после изменений)
 function saveGame() {
     localStorage.setItem('oceania_player', JSON.stringify(player));
 }
@@ -69,7 +67,7 @@ function spawnObject(type) {
 
             checkLevelUp();
             updateUI();
-            saveGame(); // СОХРАНЯЕМ после каждого клика
+            saveGame(); 
         } else {
         }
     };
@@ -82,8 +80,6 @@ function showLevelUpMessage(newLevel) {
     msg.className = 'level-up-anim';
     msg.innerHTML = `LEVEL UP!<br><span style="font-size: 40px">Уровень ${newLevel}</span>`;
     document.body.appendChild(msg);
-    
-    // Удаляем элемент после анимации
     setTimeout(() => msg.remove(), 2000);
 }
 
@@ -94,7 +90,7 @@ function checkLevelUp() {
         player.nextLvl = Math.round(player.nextLvl * 1.6);
         
         saveGame();
-        showLevelUpMessage(player.lvl); // Вызываем красивое сообщение вместо alert
+        showLevelUpMessage(player.lvl); 
     }
 }
 
@@ -102,13 +98,11 @@ setInterval(() => {
     if (player.energy < player.maxEnergy) {
         player.energy++;
         updateUI();
-        saveGame(); // СОХРАНЯЕМ при регене энергии
+        saveGame(); 
     }
 }, 1000);
 
-// Спавним объекты
 for(let i = 0; i < 5; i++) spawnObject('grass');
 for(let i = 0; i < 3; i++) spawnObject('tree');
 
 updateUI();
-

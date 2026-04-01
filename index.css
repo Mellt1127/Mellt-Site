@@ -302,35 +302,33 @@ border-radius: 6px;
     z-index: 9999;
 }
 
-/* Сам Меллт-помощник */
 #mellt-assistant {
-    position: fixed; /* Фиксируем на экране */
-    bottom: 20px; /* Отступ снизу */
-    right: 20px; /* Отступ справа */
-    width: 100px; /* Размер Меллта */
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    width: 100px;
     height: auto;
-    cursor: pointer; /* Курсор-указатель, чтобы было понятно, что кликабельно */
-    z-index: 1000; /* Поверх всего остального */
-    transition: transform 0.2s ease-in-out; /* Плавное увеличение при наведении */
+    cursor: pointer; 
+    z-index: 1000; 
+    transition: transform 0.2s ease-in-out; 
 }
 
 #mellt-assistant:hover {
     transform: scale(1.1);
 }
 
-/* Окно чата */
 #mellt-chatbox {
     position: fixed;
     bottom: 20px;
-    right: 150px; /* Правее Меллта */
+    right: 150px; 
     width: 300px;
     height: 400px;
-    background: linear-gradient(135deg, #2a2a2a, #1a1a1a); /* Темный градиент */
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a); 
     border: 1px solid #444;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
     z-index: 999;
-    display: none; /* Изначально скрыт */
+    display: none;
     flex-direction: column;
     overflow: hidden;
     font-family: 'Arial', sans-serif;
@@ -360,9 +358,9 @@ border-radius: 6px;
 }
 
 .chat-messages {
-    flex-grow: 1; /* Занимает всё доступное место */
+    flex-grow: 1;
     padding: 10px;
-    overflow-y: auto; /* Прокрутка для сообщений */
+    overflow-y: auto;
     background-color: #222;
 }
 
@@ -371,19 +369,19 @@ border-radius: 6px;
     padding: 8px 12px;
     border-radius: 15px;
     max-width: 80%;
-    word-wrap: break-word; /* Перенос длинных слов */
+    word-wrap: break-word; 
 }
 
 .mellt-message {
-    background-color: #009d2f; /* Синий для Меллта */
+    background-color: #009d2f; 
     align-self: flex-start;
     border-bottom-left-radius: 3px;
 }
 
 .user-message {
-    background-color: #555; /* Серый для пользователя */
+    background-color: #555;
     align-self: flex-end;
-    margin-left: auto; /* Чтобы прижималось к правому краю */
+    margin-left: auto;
     border-bottom-right-radius: 3px;
 }
 
@@ -392,12 +390,12 @@ border-radius: 6px;
     background-color: #333;
     border-top: 1px solid #555;
     display: flex;
-    flex-wrap: wrap; /* Для команд-пузырей */
+    flex-wrap: wrap;
     gap: 5px;
 }
 
 #user-input {
-    width: calc(100% - 70px); /* Ширина поля ввода */
+    width: calc(100% - 70px);
     padding: 8px;
     border: 1px solid #555;
     border-radius: 5px;
@@ -408,7 +406,7 @@ border-radius: 6px;
 
 #send-button {
     padding: 8px 12px;
-    background-color: #1dff2c; /* Бирюзовая кнопка */
+    background-color: #1dff2c;
     color: #1a1a1a;
     border: none;
     border-radius: 5px;

@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Переключение окна чата
 function toggleChatbox() {
     const chatbox = document.getElementById('mellt-chatbox');
     chatbox.style.display = chatbox.style.display === 'none' || chatbox.style.display === '' ? 'flex' : 'none';
@@ -42,7 +41,6 @@ function toggleChatbox() {
     }
 }
 
-// Добавляем обработчик клика на Меллта
 document.addEventListener('DOMContentLoaded', function() {
     const melltAssistant = document.getElementById('mellt-assistant');
     if (melltAssistant) {
@@ -53,8 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-button');
     const chatMessages = document.getElementById('chat-messages');
     const popularCommands = document.getElementById('popular-commands');
-
-    // База знаний Меллта
     const melltKnowledge = {
         "привет": "Привет! Рад тебя видеть на моем сайте.",
         "как дела": "У меня все отлично, особенно когда ты тут. Чем могу помочь?",
@@ -75,21 +71,18 @@ document.addEventListener('DOMContentLoaded', function() {
         "зелёный глаз": "Зачем ты написал это...",
     };
 
-    // Функция отправки сообщения
     function sendMessage() {
         const userText = userInput.value.trim();
         if (userText === '') return;
 
-        // Добавляем сообщение пользователя
         const userMsg = document.createElement('p');
         userMsg.className = 'user-message';
         userMsg.innerText = userText;
         chatMessages.appendChild(userMsg);
 
-        userInput.value = ''; // Очищаем поле ввода
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Прокручиваем вниз
+        userInput.value = ''; 
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Отвечает Меллт
         setTimeout(() => {
             let melltResponse = melltKnowledge[userText.toLowerCase()];
             if (!melltResponse) {
@@ -99,16 +92,14 @@ document.addEventListener('DOMContentLoaded', function() {
             melltMsg.className = 'mellt-message';
             melltMsg.innerText = melltResponse;
             chatMessages.appendChild(melltMsg);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Прокручиваем вниз
-        }, 800); // Задержка для имитации "печати"
+            chatMessages.scrollTop = chatMessages.scrollHeight; 
+        }, 800); 
     }
 
-    // Обработчик кнопки "Отправить"
     if (sendButton) {
         sendButton.onclick = sendMessage;
     }
 
-    // Обработчик Enter в поле ввода
     if (userInput) {
         userInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -117,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Обработчик кликов по "пузырям" команд
     if (popularCommands) {
         popularCommands.addEventListener('click', function(e) {
             if (e.target.classList.contains('command-bubble')) {
@@ -127,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Включаем поле ввода и кнопку после загрузки
     if (userInput && sendButton) {
         userInput.disabled = false;
         sendButton.disabled = false;
